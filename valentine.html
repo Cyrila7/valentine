@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine? 💕</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #ffeef8 0%, #ffe0f0 50%, #ffd4e8 100%);
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        /* Floating hearts background */
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            animation: float 10s infinite;
+            opacity: 0.6;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .container {
+            background: white;
+            padding: 50px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(255, 105, 180, 0.3);
+            max-width: 600px;
+            z-index: 10;
+            animation: fadeIn 1s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        h1 {
+            color: #ff4d6d;
+            font-size: 3rem;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        p {
+            color: #590d22;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .apology {
+            font-style: italic;
+            color: #ff69b4;
+            margin: 20px 0;
+            font-size: 1.1rem;
+        }
+        
+        .buttons {
+            margin-top: 30px;
+            position: relative;
+            min-height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        button {
+            padding: 15px 40px;
+            font-size: 1.3rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+        
+        #yesBtn {
+            background: linear-gradient(135deg, #ff4d6d 0%, #ff8fa3 100%);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        #noBtn {
+            background-color: #ffb3c1;
+            color: #590d22;
+            position: absolute;
+        }
+        
+        .hidden { display: none !important; }
+        
+        /* Success screen styles */
+        #success-screen {
+            animation: fadeIn 1s ease-in;
+        }
+        
+        .flower-garden {
+            font-size: 4rem;
+            margin: 30px 0;
+            animation: bloom 2s ease-in-out;
+        }
+        
+        @keyframes bloom {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .love-note {
+            background: #fff8dc;
+            border-left: 5px solid #ff4d6d;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 10px;
+            font-style: italic;
+            color: #333;
+            animation: slideIn 1s ease-out 0.5s both;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(-100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .promise {
+            color: #ff1493;
+            font-weight: bold;
+            margin-top: 20px;
+            font-size: 1.1rem;
+            animation: slideIn 1s ease-out 1s both;
+        }
+        
+        /* Confetti */
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ff4d6d;
+            animation: confettiFall 3s linear;
+        }
+        
+        @keyframes confettiFall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .emoji-rain {
+            position: absolute;
+            font-size: 30px;
+            animation: emojiDrop 4s linear;
+        }
+        
+        @keyframes emojiDrop {
+            to {
+                transform: translateY(100vh) rotate(180deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating hearts background -->
+    <div id="hearts-container"></div>
+
+    <div id="question-screen" class="container">
+        <h1>💝 Will You Be My Valentine? 💝</h1>
+        <p>I tried so hard to get you flowers in Northampton...</p>
+        <p class="apology">But every florist was sold out or impossible to reach! 😭</p>
+        <p>So I built you this instead. 💻✨</p>
+        <p style="font-size: 1rem; color: #888; margin-top: 15px;">
+            (I know it's not the same as a real bouquet, but it comes from the heart! I SWEARRRRRRR!  )
+        </p>
+        
+        <div class="buttons">
+            <button id="yesBtn">Yes! 💕</button>
+            <button id="noBtn">No 😢</button>
+        </div>
+    </div>
+
+    <div id="success-screen" class="container hidden">
+        <h1>🎉 YES! She said YES! 🎉</h1>
+        
+        <div class="flower-garden">
+            🌹🌷🌺🌻🌼🌸💐🏵️🌹
+        </div>
+        
+        <div class="love-note">
+            <p><strong>Dear Anjola,</strong></p>
+            <p>These digital flowers will last forever… kinda like how I feel about you. 💕</p>
+            <p>You deserve the world, and I promise the real bouquet is coming soon!</p>
+            <p>Until then, you're stuck with me 😄</p>
+            <p style="font-size: 0.9rem; color: #888; margin-top: 10px;">
+                (P.S. I hope this silly page made you smile, because that's all I want! 😊)
+        </div>
+        
+        <p class="promise">
+            🌹 Real flowers are on their way, I promise! 🌹<br>
+            This is just the preview. 😊
+        </p>
+        
+        <p style="margin-top: 30px; color: #ff4d6d; font-size: 1.5rem;">
+            ❤️ Happy Valentine's Day! ❤️
+        </p>
+        
+        <button id="continueBtn" style="margin-top: 20px; padding: 15px 40px; font-size: 1.2rem; border: none; border-radius: 50px; background: linear-gradient(135deg, #ff4d6d 0%, #ff8fa3 100%); color: white; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+            Wait, there's more... 😏
+        </button>
+    </div>
+
+    <div id="naija-screen" class="container hidden">
+        <h1 style="font-size: 2.5rem; margin-bottom: 30px;">😂 I cant be nice without being mean... 😂</h1>
+       
+        <!-- Comment 
+        <div style="font-size: 3rem; margin: 20px 0;">
+            🇳🇬 💚 🇳🇬
+        </div>
+        -->
+        
+        <!-- Photo Gallery -->
+        <div style="display: flex; gap: 15px; justify-content: center; margin: 30px 0; flex-wrap: wrap;">
+            <img src="IMG_321.JPG" alt="Gorgeous Anjola" style="width: 200px; height: 250px; object-fit: cover; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); border: 3px solid #ff4d6d;">
+        </div>
+        
+        <p style="font-size: 1.5rem; color: #ff4d6d; font-weight: bold; margin: 30px 0; line-height: 1.8;">
+            Omo I still don't like you sha 😤
+        </p>
+        
+        
+        <div style="background: #fff8dc; border-left: 5px solid #008751; padding: 25px; margin: 30px 0; border-radius: 10px;">
+            <p style="color: #333; font-size: 1.1rem; line-height: 1.6;">
+                <strong>Let me talk my shit now!</strong><br><br>
+                Even if the you're the last woman on earth, i will still not let you get into my pant sha.<br>
+                Also "You better open that heart for me widely oooo, even if you dont open it i will still find my way in there 😎"...<br>
+            </p>
+        </div>
+        
+        <p style="font-size: 1.3rem; color: #ff1493; margin-top: 30px; font-weight: bold;">
+            But seriously though... 💕<br>
+            Happy Valentine's Day 🌹
+        </p>
+        
+
+    </div>
+
+    <script>
+        // Create floating hearts background
+        function createFloatingHearts() {
+            const heartsContainer = document.getElementById('hearts-container');
+            const hearts = ['❤️', '💕', '💖', '💗', '💝', '💘'];
+            
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'heart';
+                    heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.animationDuration = (Math.random() * 5 + 8) + 's';
+                    heart.style.animationDelay = Math.random() * 5 + 's';
+                    heartsContainer.appendChild(heart);
+                }, i * 300);
+            }
+        }
+        
+        createFloatingHearts();
+        
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const continueBtn = document.getElementById('continueBtn');
+        const questionScreen = document.getElementById('question-screen');
+        const successScreen = document.getElementById('success-screen');
+        const naijaScreen = document.getElementById('naija-screen');
+        
+        let noBtnScale = 1;
+        let yesBtnScale = 1;
+        let escapeCount = 0;
+        
+        // Make the "No" button run away and Yes button grow!
+        noBtn.addEventListener('mouseover', () => {
+            escapeCount++;
+            
+            // Move No button to random position
+            const maxX = window.innerWidth - noBtn.offsetWidth - 100;
+            const maxY = window.innerHeight - noBtn.offsetHeight - 100;
+            const x = Math.random() * maxX + 50;
+            const y = Math.random() * maxY + 50;
+            
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
+            
+            // Make Yes button bigger each time!
+            yesBtnScale += 0.15;
+            yesBtn.style.transform = `scale(${yesBtnScale})`;
+            
+            // After 5 attempts, make No button tiny and Yes button huge
+            if (escapeCount >= 5) {
+                noBtn.style.transform = 'scale(0.5)';
+                noBtn.textContent = '😢';
+                yesBtn.textContent = 'YES!!! 💕💕💕';
+            }
+        });
+        
+        // Confetti and celebration when Yes is clicked
+        function createConfetti() {
+            const colors = ['#ff4d6d', '#ff8fa3', '#ffb3c1', '#ffd4e8', '#fff0f3'];
+            const emojis = ['❤️', '💕', '💖', '💗', '🌹', '💝', '✨', '🎉'];
+            
+            for (let i = 0; i < 100; i++) {
+                setTimeout(() => {
+                    // Create confetti pieces
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.top = '-10px';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = Math.random() * 2 + 's';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 3000);
+                    
+                    // Create emoji rain
+                    if (i % 3 === 0) {
+                        const emoji = document.createElement('div');
+                        emoji.className = 'emoji-rain';
+                        emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                        emoji.style.left = Math.random() * 100 + '%';
+                        emoji.style.top = '-50px';
+                        emoji.style.animationDelay = Math.random() * 2 + 's';
+                        document.body.appendChild(emoji);
+                        
+                        setTimeout(() => emoji.remove(), 4000);
+                    }
+                }, i * 20);
+            }
+        }
+        
+        // Send email notification when she says YES!
+        function sendNotification() {
+            const timestamp = new Date().toLocaleString();
+            
+            // Using Formspree (free email service)
+            // Replace 'YOUR_FORM_ID' with your actual Formspree form ID
+            fetch('https://formspree.io/f/xzdarpzv', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    message: '🎉 SHE SAID YES! 💕',
+                    timestamp: timestamp,
+                    event: 'Valentine Yes Button Clicked'
+                })
+            }).catch(err => console.log('Notification sent!'));
+        }
+        
+        yesBtn.addEventListener('click', () => {
+            // Send notification email
+            sendNotification();
+            
+            createConfetti();
+            setTimeout(() => {
+                questionScreen.classList.add('hidden');
+                successScreen.classList.remove('hidden');
+            }, 500);
+        });
+        
+        // Continue to Nigerian twist page
+        continueBtn.addEventListener('click', () => {
+            successScreen.classList.add('hidden');
+            naijaScreen.classList.remove('hidden');
+        });
+        
+        // Easter egg: if they click No button (somehow), show a message
+        noBtn.addEventListener('click', () => {
+            alert("Nice try! But that button doesn't work here! 😏💕");
+        });
+    </script>
+</body>
+</html>
