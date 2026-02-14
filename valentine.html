@@ -207,6 +207,53 @@
             }
         }
         
+        /* Scratch card styles */
+        .scratch-container {
+            position: relative;
+            margin: 25px auto;
+            max-width: 400px;
+        }
+        
+        .scratch-card {
+            position: relative;
+            background: #ffe0f0;
+            border: 2px dashed #ff4d6d;
+            padding: 30px 20px;
+            border-radius: 15px;
+            cursor: pointer;
+        }
+        
+        .scratch-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            user-select: none;
+            transition: opacity 0.3s;
+        }
+        
+        .scratch-overlay.revealed {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .scratch-content {
+            font-size: 1.2rem;
+            color: #590d22;
+            font-weight: bold;
+            line-height: 1.6;
+        }
+        
         /* Mobile Responsive Styles */
         @media (max-width: 768px) {
             body {
@@ -373,6 +420,19 @@
             Happy Valentine's Day 🌹
         </p>
         
+        <!-- Scratch to reveal card -->
+        <div class="scratch-container">
+            <div class="scratch-card">
+                <div class="scratch-overlay" id="scratchOverlay">
+                    👆 Scratch here to reveal! 👆
+                </div>
+                <div class="scratch-content">
+                    ⚠️ <strong>Important Notice:</strong> ⚠️<br><br>
+                    If I see you, I will give you one correct French kiss 🇫🇷… <br>
+                    <span style="color: #ff4d6d;">no refund oo 😌</span>
+                </div>
+            </div>
+        </div>
 
     </div>
 
@@ -507,6 +567,47 @@
         // Easter egg: if they click No button (somehow), show a message
         noBtn.addEventListener('click', () => {
             alert("Nice try! But that button doesn't work here! 😏💕");
+        });
+        
+        // Scratch card functionality
+        const scratchOverlay = document.getElementById('scratchOverlay');
+        let isScratching = false;
+        
+        function revealCard() {
+            scratchOverlay.classList.add('revealed');
+        }
+        
+        // Click/tap to reveal
+        scratchOverlay.addEventListener('click', revealCard);
+        
+        // Touch and drag to scratch (mobile)
+        scratchOverlay.addEventListener('touchstart', (e) => {
+            isScratching = true;
+        });
+        
+        scratchOverlay.addEventListener('touchmove', (e) => {
+            if (isScratching) {
+                revealCard();
+            }
+        });
+        
+        scratchOverlay.addEventListener('touchend', () => {
+            isScratching = false;
+        });
+        
+        // Mouse drag to scratch (desktop)
+        scratchOverlay.addEventListener('mousedown', (e) => {
+            isScratching = true;
+        });
+        
+        scratchOverlay.addEventListener('mousemove', (e) => {
+            if (isScratching) {
+                revealCard();
+            }
+        });
+        
+        scratchOverlay.addEventListener('mouseup', () => {
+            isScratching = false;
         });
     </script>
 </body>
