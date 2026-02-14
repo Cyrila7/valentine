@@ -13,17 +13,20 @@
         
         body {
             font-family: 'Georgia', serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
             background: linear-gradient(135deg, #ffeef8 0%, #ffe0f0 50%, #ffd4e8 100%);
+            background-attachment: fixed;
             text-align: center;
-            overflow-x: hidden;
-            overflow-y: auto;
             position: relative;
-            padding: 20px 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        /* Centering wrapper for desktop */
+        body::before {
+            content: '';
+            display: inline-block;
+            height: 100vh;
+            vertical-align: middle;
         }
         
         /* Floating hearts background */
@@ -58,6 +61,9 @@
             z-index: 10;
             animation: fadeIn 1s ease-in;
             margin: 20px auto;
+            display: inline-block;
+            vertical-align: middle;
+            position: relative;
         }
         
         @keyframes fadeIn {
@@ -205,7 +211,10 @@
         @media (max-width: 768px) {
             body {
                 padding: 10px;
-                justify-content: flex-start;
+            }
+            
+            body::before {
+                display: none;
             }
             
             .container {
@@ -213,6 +222,7 @@
                 margin: 10px auto;
                 max-width: 95%;
                 width: 95%;
+                display: block;
             }
             
             h1 {
